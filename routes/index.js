@@ -1,15 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-let testData = {
-  name: 'Test Dummy',
-  info: 'A test dummy for testing stuff for Gooey.js',
-  email: 'test@dummy.com',
-  avatar: '/images/test-dummy.jpg'
-}
+const Movie = require('../models/Movie');
 
 router.get('/', async (req, res, next)=> {
-  res.status(200).json(testData);
+  try{
+    let movies = await Movie.find();
+    res.status(200).json(movies);
+  }catch(error){
+    next((error)=>{
+      console.log(error);
+    });
+  }
 });
 
 
